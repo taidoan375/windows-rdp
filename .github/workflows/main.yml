@@ -1,0 +1,22 @@
+name: Free Windows VPS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 720   # 12 tiếng
+
+    steps:
+    - name: Enable RDP
+      run: |
+        echo "Starting Windows VPS..."
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        net user runneradmin P@ssw0rd
+        curl ifconfig.me
+        echo "Username: runneradmin"
+        echo "Password: P@ssw0rd"
+        echo "VPS will stay online for 12 hours."
+        Start-Sleep -Seconds 43200
