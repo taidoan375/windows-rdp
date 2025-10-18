@@ -6,17 +6,23 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    timeout-minutes: 720   # 12 tiếng
+    timeout-minutes: 720  # 12 tiếng
 
     steps:
-    - name: Enable RDP
+    - name: Setup RDP Access
       run: |
-        echo "Starting Windows VPS..."
+        echo "🔧 Đang khởi tạo VPS Windows..."
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-        net user runneradmin P@ssw0rd
+        net user runneradmin P@ssw0rd123
+        echo "✅ RDP đã được bật"
+        echo "--------------------------------------"
+        echo "🌐 Địa chỉ IP công cộng của bạn là:"
         curl ifconfig.me
-        echo "Username: runneradmin"
-        echo "Password: P@ssw0rd"
-        echo "VPS will stay online for 12 hours."
-        Start-Sleep -Seconds 43200
+        echo ""
+        echo "👤 Username: runneradmin"
+        echo "🔑 Password: P@ssw0rd123"
+        echo "🕐 VPS sẽ hoạt động trong 12 tiếng"
+        echo "--------------------------------------"
+        echo "🖥️ Giữ cho VPS hoạt động..."
+        while ($true) { Start-Sleep -Seconds 60 }
